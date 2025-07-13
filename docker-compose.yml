@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: timescale/timescaledb:latest-pg15
+    contaimer_name: matchtracker_db
+    environment:
+      POSTGRES_DB: matchtracker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:- password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/migration:/docker-entrypoint-initdb.d
+    ports: 
+      - "5432:5432"
+    networks: matchtracker
